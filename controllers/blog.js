@@ -21,6 +21,32 @@ class BLOG {
                 res.status(404).send(err)
             })
     }
+
+    static update(req, res){
+        Blog.findByIdAndUpdate(req.params.id, {
+            $set:{
+                title: req.body.title,
+                content: req.body.content,
+                author: req.body.author
+            }
+        },{new: true})
+        .then(blogArticle=>{
+            res.status(200).send({blogArticle, message:'Book updated!'})
+        })
+        .catch(err=>{
+            res.status(400).send(err)
+        })
+    }
+
+    static delete(req, res) {
+        Blog.findByIdAndRemove(req.params.id)
+            .then(blogArticle => {
+                res.status(200).send(blogArticle)
+            })
+            .catch(err => {
+                res.status(400).send(err)
+            })
+    }
 }
 
 module.exports = BLOG;
