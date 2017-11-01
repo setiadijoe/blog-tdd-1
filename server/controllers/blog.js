@@ -22,12 +22,23 @@ class BLOG {
             })
     }
 
+    static findById(req, res){
+        Blog.findById(req.params.id)
+            .then(getArticle=>{
+                res.status(200).send(getArticle)
+            })
+            .catch(err=>{
+                res.status(404).send(err)
+            })
+    }
+
     static update(req, res){
         Blog.findByIdAndUpdate(req.params.id, {
             $set:{
                 title: req.body.title,
                 content: req.body.content,
-                author: req.body.author
+                author: req.body.author,
+                imgUrl: req.body.imgUrl
             }
         },{new: true})
         .then(blogArticle=>{
